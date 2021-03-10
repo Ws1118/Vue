@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>quickstart快速起步</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            padding: 20px;
+        }
+
+        #app {
+            background-color: #A8BCE2;
+            box-sizing: border-box;
+            border: 30px solid #235369;
+        }
+
+        #app1 {
+            width: 100vw;
+            height: 600px;
+            background-color: #6AB8CD;
+            text-align: center;
+            /* padding: 10px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            align-items: stretch; */
+        }
+
+        #app1 p {
+            width: 200px;
+            height: 200px;
+            background-color: brown;
+            border: 20px solid #fff;
+            box-sizing: border-box;
+            float: left;
+            /* 按行存放，满了就下来 */
+            /* flex:1 1 22%; */
+            /* display: inline-block; */
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <h2>{{message}}(直接使用插值表达式)</h2>
+        <h2 v-text="info">（使用v-text指令显示富文本）</h2>
+        <h2 v-html="info">（使用v-text指令显示富文本）</h2>
+        <h2 v-pre>Vue.js很不错，尤其是{{Mustache}}插值表达式</h2>
+        <h2>{{firstName}} {{lastName}}（注意中间空格）</h2>
+        <h2>{{firstName + lastName}}（字符串拼接）</h2>
+        <h2>{{lastName.length}}个字符（取得属性）</h2>
+        <h2>{{age * 2}}（算数表达式）</h2>
+        <h2>{{age > 40 ? '中年':'青年'}}（三目运算）</h2>
+        <h2>{{firstName.split('a').reverse().join(',')}}(使用js函数)</h2>
+        <h2>{{customMethod(firstName)}}(使用自定义函数)</h2>
+        <h2>{{date|dateFormat('')}}</h2>
+    </div>
+    <div id="app1">
+        <h1 v-if="num > 50">
+            <!-- {{message}} -->
+            大于50
+        </h1>
+        <h3>hello</h3>
+        <h2 v-if="num > 30">小于等于50，大于30</h2>
+        <h2 v-else>小于等于30</h2>
+        <!-- 语法糖 :src代表v-bind:src     
+            : 代表v-bind:
+            @ v代表-on -->
+        <img :src="imgSrc"/>
+        <input type="text" :placeholder="info">
+        <!-- <div></div>
+        <div></div>
+        <div></div>         -->
+        <!-- <p></p>
+        <p></p>
+        <p></p> -->
+    </div>
+    <!-- <script src="../js/vue.js"></script> -->
+    <!-- 从CDN引入vue.js -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+        // 全局过滤器
+        Vue.filter('dateFormat', function (input, pattern = '') {
+            let dt = new Date(input)
+            // 年月日
+            let y = dt.getFullYear()
+            let m = (dt.getMonth() + 1).toString().padStart(2, '0')
+            let d = (dt.getDate()).toString().padStart(2, '0')
+            // 时分秒
+            let hh = (dt.getHours()).toString().padStart(2, '0')
+            let mm = (dt.getMinutes()).toString().padStart(2, '0')
+            let ss = (dt.getSeconds()).toString().padStart(2, '0')
+            // 拼接
+            if (pattern.toLocaleLowerCase() === 'yyyy-mm-dd') {
+                return `${y}-${m}-${d}`
+            } else {
+                return `${y}-${m}-${d} ${hh}:${mm}:${ss}`
+            }
+        })
+
+        const app1 = new Vue({
+            el: '#app1',
+            data: {
+                message: 'ws',
+                // false:false,
+                num:50,
+                imgSrc:'https://wshan.oss-cn-beijing.aliyuncs.com/touxiang.jpg',
+                info:'请输入账号',
+            }
+        })
+
+        const app = new Vue({
+            el: '#app',
+            data: {
+                Mustache: 'Mustache',
+                message: 'Vue.js',
+                firstName: 'Evan',
+                lastName: 'You',
+                age: 41,
+                info: '<a href="https//cn.vue.js.org/">Vue.js文档</a>',
+                date: new Date(),
+            },
+            methods: {
+                customMethod(str) {
+                    return str.split('a').reverse().join('#')
+                }
+            },
+            mounted() {
+                this.timer = setInterval(() => {
+                    this.date = new Date()
+                }, 1000)
+            },
+            beforeDestroy() {
+                if (this.timer) {
+                    clearInterval(this.timer)
+                }
+            },
+
+            filters: {
+                dateFormat: function (input, pattern = '') {
+                    let dt = new Date(input)
+                    // 年月日
+                    let y = dt.getFullYear()
+                    let m = (dt.getMonth() + 1).toString().padStart(2, '0')
+                    let d = (dt.getDate()).toString().padStart(2, '0')
+                    // 时分秒
+                    let hh = (dt.getHours()).toString().padStart(2, '0')
+                    let mm = (dt.getMinutes()).toString().padStart(2, '0')
+                    let ss = (dt.getSeconds()).toString().padStart(2, '0')
+                    // 拼接
+                    if (pattern.toLocaleLowerCase() === 'yyyy-mm-dd') {
+                        return `${y}年${m}月${d}日`
+                    } else {
+                        return `${y}年${m}月${d}日 ${hh}:${mm}:${ss}`
+                    }
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
