@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>全局环境的this</title>
+</head>
+
+<body>
+    <button id="btn">点击</button>
+    <script>
+        // 函数中的this指针
+        // 谁调用了这个函数，this就指向谁
+        // let btn = document.getElementById('btn')
+        // btn.onclick = function () {
+        //     console.log(this)
+        // }
+        // 全局函数中的this指针
+        // console.log(this === window)
+        // console.log(this.document === document)
+
+        // 非严格模式
+        // function test1() {
+        //     return this
+        // }
+        // console.log(test1() === window) //true
+        // //等同于下面代码
+        // console.log(window.test1() === window)  //true
+
+        // 严格模式
+        // function test2() {
+        //     'use strict'  //使用严格模式
+        //     return this
+        // }
+        // console.log(test2() + '>>>>>>>>')
+        // console.log(test2() == underfined)
+        // console.log(window.test2() == window)
+
+        // console.log(test2() === underfined)
+        // console.log(window.test2() === window)
+        class Player {
+            constructor(name, age) {
+                this.name = name
+                this.age = age
+            }
+
+            // this指针使用中解决指向window问题方法一
+            // printInfo() {
+                // setTimeout(() => {
+                //     console.log(this)
+                //     console.log(this.name + '' + this.age)
+                // }, 3000)
+
+                // window.setTimeout(function(){
+                //     console.log(this)
+                //     console.log(this.name + '------' + this.age)
+                // }, 2000)
+                
+            //     let _this = this
+            //     window.setTimeout(function(){
+            //         console.log(this.name + '------' + this.age)
+            //     }, 2000)
+            // }
+
+            //this指针使用中解决指向window问题方法二
+            // printInfo() {
+            //     window.setTimeout(function(){
+            //         console.log(this.name + '------' + this.age)
+            //     }.bind(this), 2000)
+            // }
+
+            //this指针使用中解决指向window问题方法三
+            printInfo() {
+                window.setTimeout(() => {
+                    console.log(this.name + '------' + this.age)
+                }, 2000)
+            }
+        }
+        let play2 = new Player('tom', 20)
+        play2.printInfo()
+    </script>
+</body>
+
+</html>
