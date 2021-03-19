@@ -14,8 +14,8 @@
 // 同步：无反应则一直等
 // 异步：不是同一个事件
 
-//callback hell 回调地域
-//Pending、Fulfilled、Rejected
+// callback hell 回调地域
+// Pending、Fulfilled、Rejected
 let p1 = new Promise((resolve, reject) => {
     setTimeout(() => {
         console.log('p1')
@@ -37,13 +37,13 @@ let p3 = new Promise((resolve, reject) => {
     }, 3000)
 })
 
-//按时间顺序显示，并回调每个值
+// 按时间顺序显示，并回调每个值
 Promise.all([p1, p2, p3]).then((res) => {
     console.log('全部完成')
     console.log(res)
 })
 
-//按时间顺序显示，回调最先完成的值
+// 按时间顺序显示，回调最先完成的值
 // Promise.race([p1, p2, p3]).then((res) => {
 //     console.log('全部完成')
 //     console.log(res)

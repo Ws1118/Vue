@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>按键监听修饰符</title>
+</head>
+<body>
+    <div id="head">
+        <input @keyDown.f2="mi">
+        <p>{{ msg }}</p>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+        Vue.config.keyCodes.f2 = 113;
+        let vue1 = new Vue({
+            el: '#head',
+            data: {
+                msg: ""
+            },
+            methods: {
+                mi: function () {
+                    alert("success")
+                }
+            }
+        });
+    </script>
+</body>
+</html>

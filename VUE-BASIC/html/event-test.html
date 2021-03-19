@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>事件练习作业</title>
+    <style>
+        /* *清空内外边距，顶到最上面 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        #app {
+            margin: 50px;
+        }
+
+        .btn {
+            width: 100px;
+            height: 35px;
+            font-size: 1.5em;
+            margin: 10px;
+        }
+
+        .input-from {
+            margin-top: 20px;
+            width: 300px;
+            height: 35px;
+        }
+
+        .class1 {
+            font-size: 40px;
+            color: #fff;
+        }
+
+        .class2 {
+            background-color: #000;
+        }
+
+        .class3 {
+            font-size: 40px;
+            color: #333;
+        }
+
+        .class4 {
+            background-color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app" class="box">
+        <input type="text" placeholder="input..." @keyup.enter="info($event)" class="input-form" />
+
+        <p class="class1 class2" :class="cssArr">aaa</p>
+        <button class="btn" @click="change">切换</button>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+        const app = new Vue({
+            el: '#app',
+            data: {
+                cssArr: ['class3', 'class4'],
+            },
+            methods: {
+                info(ev) {
+                    // console.log('press')
+                    console.log(ev)
+                },
+                change() {
+                    this.cssArr = ['class1', 'class2']
+                    console.log(this.cssArr)
+                }
+            },
+        })
+    </script>
+</body>
+
+</html>

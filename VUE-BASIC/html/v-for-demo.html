@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>v-for列表渲染</title>
+</head>
+
+<body>
+    <div id="app" class="box">
+        <h3>v-for遍历数组</h3>
+        <template v-for="item in filerPersons">
+            <!-- <div v-if="item.age > 20">{{item.name}}</div>
+            <div v-else>{{item.age}}</div> -->
+            <!-- <li v-for="(value,key) in item">{{key}} : {{value}}</li> -->
+            <div>{{item.name}} --- {{item.age}}</div>
+        </template>
+        <!-- <div>
+            <li v-for="item in persons" v-if="item.age > 20">{{item.name}} {{item.age}} {{index}}</li>
+        </div> -->
+        <hr/>
+        <!-- <h3>v-for遍历对象</h3>
+        <ul> -->
+        <!-- v-for="(值,键)"  -->
+        <!-- <li v-for="(value,key) in student">{{key}} ： {{value}}</li> -->
+        <!-- </ul> -->
+
+        <!-- 关键字输入 数据绑定-->
+        <input type="text" v-model="keywords" />
+        <hr>
+        <button @click="search">搜索</button>
+        <!-- <h3>{{keywords}}</h3> -->
+
+        <!-- h5表单元素综合 -->
+        <!-- <hr>
+        <input type="color" name="" id="">
+        <hr>
+        <input type="checkbox" name="" id="play">
+        <label for="play">玩</label>
+        <input type="checkbox" name="" id="eat">
+        <label for="eat">吃</label>
+        <hr>
+        <input type="datetime" name="" id="">
+        <hr>
+        <input type="number" name="" id=""> -->
+    </div>
+    <!-- <h2>{{val}}</h2> -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+        const app = new Vue({
+            el: '#app',
+            data: {
+                content: '',
+                persons: [
+                    { name: 'zs', age: 18 },
+                    { name: 'ls', age: 19 },
+                    { name: 'ww', age: 20 },
+                    { name: 'zl', age: 21 },
+                ],
+                res: [],
+                student: {
+                    name: 'tom',
+                    age: 20,
+                    gender: 'male',
+                },
+            },
+            computed:{
+               filerPersons(){
+                   //???
+                //    const {keywords,person} = this
+                //    let resultPersons
+                //    resultPersons = this.persons.filter(item => item.name.indexOf(keywords) != -1)
+                //    return resultPersons
+                return this.persons.filter((item) => item.name.indexOf(this.keywords) != -1)
+               }
+            },
+
+            methods: {
+                search() {
+                    this.res = []
+                    this.person.forEach((person) => {
+                        if (person.name.indexOf(this.keywords) != -1) {
+                            this.res.push(person)
+                        }
+                    })
+                    console.log(JSON.stringify(this.res))
+                    this.persons = this.res
+                },
+            },
+            // created(){
+            //     // alert(this.persons.length)
+            //     this.person.forEach(person => {
+            //         // console.log(person.name)
+            //         console.log(person.name.indexOf(this.keywords))
+            //     })
+            // },
+        })
+    </script>
+</body>
+
+</html>
