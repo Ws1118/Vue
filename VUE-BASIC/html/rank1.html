@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" />
+  <title>简书数据</title>
+  <style></style>
+</head>
+
+<body>
+  <div id="app" class="box">
+    <span style="margin-left: 30px; margin-top: 50px; font-size: 24px;"> 简书作家搜索：</span>
+    <input type="text" style="height: 30px; width: 400px; margin-left: 50px;"v-model="keywords1" />
+    
+    <!-- 排序 -->
+    <button @click="setOrderType(0)" style="margin-left: 50px; height: 50px; width: 200px;">按粉丝量升序排序</button>
+    <button @click="setOrderType(1)" style=" margin-top: 20px; margin-bottom: 20px; height: 50px; width: 200px;">按粉丝量降序排序</button>
+      <div class="container">
+        <div class="row">
+            <div class="col s12 m4" v-for="ranks in filerRanks">
+            <div class="card">
+              <div class="card-image">
+                <img :src="ranks.avatar">
+              </div>
+              <div class="card-content">
+                <p class="card-name" >简书作者：{{ranks.name}}</p>
+                <p class="card-description" >介绍：{{ranks.description}}</p>
+                <p class="card-meta">作者最新状态：{{ranks.meta}}</p>
+                <p class="card-fans">粉丝数：{{ranks.fans}}</p>
+              </div>
+              <div class="card-content grey lighten-4">
+                <a :href="ranks.link1">{{ranks.new}}</a>
+                <br>
+                <a :href="ranks.link2">{{ranks.new2}}</a>
+                <br>
+                <a :href="ranks.link3">{{ranks.info}}</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+  </div>
+  
+
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script>
+    // 窗体加载就执行
+    window.onload = function () {
+      //定义json文件目录，本地或者服务器都可以，即下面的请求地址
+      let url = '../json/jianshu.json'
+      //发起一个原生的ajax请求
+      let request = new XMLHttpRequest()
+      //打开一个get请求，尚未发送
+      request.open('get', url)
+      //发送请求（不带数据）
+      request.send(null)
+      //请求成功，执行回调函数
+      request.onload = function () {
+        //响应正确，处理数据
+        if (request.status == 200) {
+          let json = JSON.parse(request.responseText)
+          // console.log(json)
+          const app = new Vue({
+            el: '#app',
+            data: {
+              keywords1: '',
+              keywords2: '',
+              ranks: [],
+              orderType: 0,
+            },
+            computed: {
+              filerRanks() {
+                // const { keywords, person } = this
+                let resultRanks
+                // 按关键字搜索
+                resultRanks = this.ranks.filter((item) => item.name.indexOf(this.keywords1) != -1)
+                // console.log(JSON.stringify(resultPersons))
+
+                console.log(this.orderType)
+                // 按电影评分升序排序
+                if (this.orderType === 0) {
+                  resultRanks.sort(function (p1, p2) {
+                    return p1.fans - p2.fans
+                  })
+                }
+                // 按电影评分降序排序
+                if (this.orderType === 1) {
+                  resultRanks.sort((p1, p2) => p2.fans - p1.fans)
+                }
+                return resultRanks
+              },
+            },
+
+            methods: {
+              // 设置orderType的值
+              setOrderType(val) {
+                this.orderType = val
+                console.log(this.orderType)
+              },
+
+            },
+            created() {
+              this.ranks = json
+              console.log(this.ranks)
+            },
+          })
+        }
+      }
+    }
+  </script>
+</body>
+
+</html>
